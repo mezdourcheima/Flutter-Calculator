@@ -1,115 +1,291 @@
 import 'package:flutter/material.dart';
+import 'widgets/Calculator_Button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(CalculatorApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CalculatorApp extends StatefulWidget {
+  CalculatorApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  _CalculatorAppState createState() => _CalculatorAppState();
+}
+
+class _CalculatorAppState extends State<CalculatorApp> {
+  late int firstNum;
+  late int secondNum;
+  late String history = '';
+  late String textToDisplay = '';
+  late String res;
+  late String operation;
+
+  void btnOnClick(String btnVal) {
+    print(btnVal);
+    if (btnVal == 'C') {
+      textToDisplay = '';
+      firstNum = 0;
+      secondNum = 0;
+      res = '';
+    } else if (btnVal == 'AC') {
+      textToDisplay = '';
+      firstNum = 0;
+      secondNum = 0;
+      res = '';
+      history = '';
+    } else if (btnVal == '+' ||
+        btnVal == '-' ||
+        btnVal == 'X' ||
+        btnVal == '/') {
+      print("HAHAH");
+      firstNum = int.parse(textToDisplay);
+      print("HAHAH1");
+
+      res = '';
+      operation = btnVal;
+    } else if (btnVal == '=') {
+      secondNum = int.parse(textToDisplay);
+      if (operation == '+') {
+        res = (firstNum + secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      } else if (operation == '-') {
+        res = (firstNum - secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      } else if (operation == 'X') {
+        res = (firstNum * secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      } else if (operation == '/') {
+        res = (firstNum / secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      } else {
+        res = int.parse(textToDisplay + btnVal).toString();
+      }
+
+      setState(() {
+        textToDisplay = res;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      debugShowCheckedModeBanner: false,
+      title: "Calculator",
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(" Flutter Calculator "),
+        ),
+        backgroundColor: Color(0xFF28527a),
+        body: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Text(
+                    history,
+                    style: GoogleFonts.rubik(
+                      textStyle: TextStyle(
+                        fontSize: 24,
+                        color: Color(0x66ffffff),
+                      ),
+                    ),
+                  ),
+                ),
+                alignment: Alignment(1.0, 1.0),
+              ),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Text(
+                    textToDisplay,
+                    style: GoogleFonts.rubik(
+                      textStyle: TextStyle(
+                        fontSize: 48,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                alignment: Alignment(1.0, 1.0),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalculatorButton(
+                    text: 'AC',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: 'C',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '<',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '/',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalculatorButton(
+                    text: '9',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '8',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '7',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: 'X',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalculatorButton(
+                    text: '6',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '5',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '4',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '-',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalculatorButton(
+                    text: '3',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '2',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '1',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '+',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalculatorButton(
+                    text: '+/-',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '0',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '00',
+                    fillColor: 0xFF8ac4d0,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                  CalculatorButton(
+                    text: '=',
+                    fillColor: 0xFFf4d160,
+                    textColor: 0xFF000000,
+                    textSize: 20,
+                    callBack: btnOnClick,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
