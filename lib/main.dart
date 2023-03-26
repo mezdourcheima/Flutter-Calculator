@@ -16,8 +16,8 @@ class CalculatorApp extends StatefulWidget {
 class _CalculatorAppState extends State<CalculatorApp> {
   late int firstNum;
   late int secondNum;
-  late String history = '';
-  late String textToDisplay = '';
+  String history = '5';
+  String textToDisplay = '5';
   late String res;
   late String operation;
 
@@ -38,6 +38,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
         btnVal == '-' ||
         btnVal == 'X' ||
         btnVal == '/') {
+      print(textToDisplay);
       print("HAHAH");
       firstNum = int.parse(textToDisplay);
       print("HAHAH1");
