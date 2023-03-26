@@ -1,6 +1,6 @@
 # flutter_calculator
 
 #### This is a simple and calculator with flutter 
-![1 image](lib/assets/1.jpg)
+<img src="lib/assets/1.jpg" alt="alt text" width="400" height="300">
 #### This project was done from the tutorial in the link below
 #### The link : https://www.youtube.com/watch?v=_DHNmRaUZgM
